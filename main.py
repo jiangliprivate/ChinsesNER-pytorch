@@ -61,7 +61,7 @@ class ChineseNER(object):
     def load_config(self):
         try:
             fopen = open("models/config.yml")
-            config = yaml.load(fopen)
+            config = yaml.safe_load(fopen)
             fopen.close()
         except Exception as error:
             print("Load config failed, using default config {}".format(error))
@@ -82,7 +82,6 @@ class ChineseNER(object):
         self.model_path = config.get("model_path")
         self.tags = config.get("tags")
         self.dropout = config.get("dropout")
-
     def restore_model(self):
         try:
             self.model.load_state_dict(torch.load(self.model_path + "params.pkl"))
